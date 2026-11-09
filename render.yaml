@@ -27,4 +27,5 @@ services:
 databases:
   - name: learnhouse-db
     plan: starter
-    postgresVersion: 15
+    postgresMajorVersion: "15"
+
