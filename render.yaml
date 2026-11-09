@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: learnhouse-app
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NEXT_PUBLIC_LEARNHOUSE_OSS
+        value: "true"
+      - key: POSTGRES_PASSWORD
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: learnhouse-db
+          property: connectionString
+
+  - type: web
+    name: learnhouse-collab
+    env: docker
+    dockerfilePath: ./apps/collab/Dockerfile
+    plan: starter
+    envVars:
+      - key: COLLAB_PORT
+        value: "4000"
+
+databases:
+  - name: learnhouse-db
+    plan: starter
+    postgresVersion: 15
